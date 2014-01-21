@@ -1,16 +1,14 @@
-DisableMediawikiStuff
+DisableSpecialPages
 =====================
 
+Mediawiki Extension to disable special pages!
 
-Mediawiki Extension
+To Install add the following to the bottom of your LocalSettings.php
 
+ > require_once( "$IP/extensions/DisableSpecialPages/DisableSpecialPages.php" );
 
-Example Use:
+Then decide what special pages you wish to disable and add them to the array as below...
 
+ > $wgDisableSpecialPages = array( 'Longpages', 'Recentchanges' );
 
- > require_once( "$IP/extensions/DisableMediawikiStuff/DisableMediawikiStuff.php" );
- >
- > $wgDisableSpecialPage = array(
- >      'Newpages',
- >      'Longpages',
- > );
+To see a list of special pages see .aSpecialPages
