@@ -1,0 +1,4 @@
+DisableMediawikiStuff
+=====================
+
+Mediawiki Extension
