@@ -11,11 +11,13 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Disable Special Pages',
-	'version'        => '0.1.0',
+	'version'        => '0.1.1',
 	'author'         => 'Adam Shorland',
-	'descriptionmsg' => 'Allows easy disabling of special pages',
+	'descriptionmsg' => 'dsp-descriptionmsg',
 	'url'            => 'https://www.github.com/addshore/DisableSpecialPages',
 );
+
+$wgExtensionMessagesFiles['DisableSpecialPages'] = __DIR__ . '/DisableSpecialPages.i18n.php';
 
 $wgHooks['SpecialPage_initList'][] = 'DisableSpecialPagesHooks::onSpecialPage_initList';
 
