@@ -17,7 +17,7 @@ $wgExtensionCredits['other'][] = array(
 	'url'            => 'https://www.github.com/addshore/DisableSpecialPages',
 );
 
-$wgHooks['SpecialPage_initList'][] = 'DisableSpecialPages::onSpecialPage_initList';
+$wgHooks['SpecialPage_initList'][] = 'DisableSpecialPagesHooks::onSpecialPage_initList';
 
 /**
  * Either an array of special pages or a string of value '*' to disable all
@@ -30,7 +30,7 @@ $wgDisableSpecialPages = array();
  */
 $wgDisableSpecialPagesIgnoreFor = array();
 
-class DisableSpecialPages {
+class DisableSpecialPagesHooks {
 
 	/**
 	 * @param array $aSpecialPages
@@ -43,22 +43,44 @@ class DisableSpecialPages {
 		/** @var User $wgUser */
 		global $wgUser;
 
-		foreach( $wgDisableSpecialPagesIgnoreFor as $group ) {
+		if( !self::currentUserCanBeSkipped( $wgUser, $wgDisableSpecialPagesIgnoreFor ) ) {
+			self::disableSpecialPages( $aSpecialPages, $wgDisableSpecialPages );
+		}
+	}
+
+	/**
+	 * @param User $wgUser
+	 * @param array $groupsToIgnore
+
+	 * @return bool
+	 */
+	private static function currentUserCanBeSkipped( $wgUser, $groupsToIgnore ) {
+		foreach( $groupsToIgnore as $group ) {
 			if( in_array( $group, $wgUser->getAllGroups() ) ) {
-				return;
+				return true;
 			}
 		}
+		return false;
+	}
 
+	private static function disableSpecialPages( &$aSpecialPages, $wgDisableSpecialPages ) {
 		if( is_array( $wgDisableSpecialPages ) ){
-			foreach( $wgDisableSpecialPages as $specialPage ) {
-				if( array_key_exists( strtolower( $specialPage ), array_change_key_case( $aSpecialPages ) ) ) {
-					unset( $aSpecialPages[$specialPage] );
-				}
-			}
+			self::disableSpecialPagesInArray( $aSpecialPages, $wgDisableSpecialPages );
 		} else if( is_string( $wgDisableSpecialPages ) && $wgDisableSpecialPages === '*' ) {
-			$aSpecialPages = array();
+			self::disableAllSpecialPages( $aSpecialPages );
 		}
+	}
 
+	private static function disableSpecialPagesInArray( &$aSpecialPages, $toDisable ) {
+		foreach( $toDisable as $specialPage ) {
+			if( array_key_exists( strtolower( $specialPage ), array_change_key_case( $aSpecialPages ) ) ) {
+				unset( $aSpecialPages[$specialPage] );
+			}
+		}
+	}
+
+	private static function disableAllSpecialPages( &$aSpecialPages ) {
+		$aSpecialPages = array();
 	}
 
 }
