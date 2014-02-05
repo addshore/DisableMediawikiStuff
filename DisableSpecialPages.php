@@ -11,7 +11,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'Disable Special Pages',
-	'version'        => '0.1.1',
+	'version'        => '0.1.2',
 	'author'         => 'Adam Shorland',
 	'descriptionmsg' => 'dsp-descriptionmsg',
 	'url'            => 'https://www.github.com/addshore/DisableSpecialPages',
