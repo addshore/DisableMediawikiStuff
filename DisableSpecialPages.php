@@ -48,6 +48,7 @@ class DisableSpecialPagesHooks {
 		if( !self::currentUserCanBeSkipped( $wgUser, $wgDisableSpecialPagesIgnoreFor ) ) {
 			self::disableSpecialPages( $aSpecialPages, $wgDisableSpecialPages );
 		}
+		return true;
 	}
 
 	/**
